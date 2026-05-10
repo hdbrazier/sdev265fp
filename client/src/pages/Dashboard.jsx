@@ -36,6 +36,7 @@ function Dashboard() {
     }
 
     try {
+      console.log("Due date being submitted:", dueDate);
       await createTask({ title, description, dueDate });
 
       setTaskMessage("Task created successfully.");
@@ -274,8 +275,7 @@ function Dashboard() {
 
                 {task.dueDate && (
                   <p>
-                    <strong>Due:</strong>{" "}
-                    {new Date(task.dueDate).toLocaleDateString()}
+                    <strong>Due:</strong> {task.dueDate.split("T")[0]}
                   </p>
                 )}
 
