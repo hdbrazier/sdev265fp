@@ -2,27 +2,34 @@ import { useState } from "react";
 import { loginUser } from "../services/api";
 
 function Login() {
+  // Store login form values and status message
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  // Handle user login
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const data = await loginUser(email, password);
 
+      // Save authentication data locally
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
       setMessage("Login successful");
+
+      // Redirect user to dashboard
       window.location.href = "/dashboard";
+
       console.log("Logged in user:", data.user);
     } catch (error) {
       setMessage(error.message);
     }
   };
 
+  // Login page user interface
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Login</h1>
@@ -52,6 +59,10 @@ function Login() {
       </form>
 
       {message && <p>{message}</p>}
+
+      <p style={{ marginTop: "1rem" }}>
+        Don&apos;t have an account? <a href="/register">Create one</a>
+      </p>
     </div>
   );
 }
